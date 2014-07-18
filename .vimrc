@@ -32,6 +32,7 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'scrooloose/nerdtree'
 " インデントに色を付けて見やすくする
 " NeoBundle 'nathanaelkane/vim-indent-guides'
 
@@ -184,15 +185,51 @@ function! s:my_crinsert()
 endfunction
 inoremap <silent> <CR> <C-R>=<SID>my_crinsert()<CR>
 
-" :let mapleader = "_"
 
 " unite prefix key
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
 " mappings
 nnoremap [unite]b :<C-u>Unite<Space>buffer<CR>
+nnoremap [unite]t :<C-u>Unite<Space>tab<CR>
 nnoremap [unite]f :<C-u>Unite<Space>file<CR>
 nnoremap [unite]m :<C-u>Unite<Space>file_mru<CR>
 nnoremap [unite]a :<C-u>Unite buffer file file_mru bookmark<CR>
 nnoremap [unite]r :<C-u>Unite<Space>register<CR>
 nnoremap [unite]R :<C-u>UniteResume<CR>
+
+
+" タブ管理
+nnoremap [Tag] <Nop>
+nmap t [Tag]
+
+" Tab jump
+" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+
+" to 新しいタブを一番右に作る
+map <silent> [Tag]o :tablast <bar> tabnew<CR>
+" tx タブを閉じる
+map <silent> [Tag]x :tabclose<CR>
+" tn 次のタブ
+map <silent> [Tag]n :tabnext<CR>
+" tp 前のタブ
+map <silent> [Tag]p :tabprevious<CR>
+
+nnoremap s <Nop>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap ss :split<CR>
+nnoremap sv :vsplit<CR>
+
+
+" NERDTree
+nmap <silent> <C-e>      :NERDTreeToggle<CR>
+vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+omap <silent> <C-e>      :NERDTreeToggle<CR>
+imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
